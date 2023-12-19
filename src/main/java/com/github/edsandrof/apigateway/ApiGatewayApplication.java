@@ -2,6 +2,7 @@ package com.github.edsandrof.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
@@ -13,16 +14,17 @@ public class ApiGatewayApplication {
 	}
 
 	@Bean
-	public RouterLocator myRoutes(RouteLocatorBuilder builder) {
+	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("path_route", r -> r.path("/get")
-						.uri("http://httpbin.org"))
-				.route("host_route", r -> r.host("*.myhost.org")
-						.uri("http://httpbin.org"))
-				.route("rewrite_route", r -> r.host("*.rewrite.org")
+				.route("movies", r -> r.path("/api/movies")
+						.uri("http://MOVIES-SERVICE"))
+				.route("tickets", r -> r.path("/api/tickets")
+						.uri("http://TICKETS-SERVICE"))
+				/*
+				.route("config", r -> r.path("*.rewrite.org")
 						.filters(f -> f.rewritePath("/foo/(?<segment>.*)", "/${segment}"))
 						.uri("http://httpbin.org"))
-				/*.route("hystrix_route", r -> r.host("*.hystrix.org")
+				.route("hystrix_route", r -> r.host("*.hystrix.org")
 						.filters(f -> f.hystrix(c -> c.setName("slowcmd")))
 						.uri("http://httpbin.org"))
 				.route("hystrix_fallback_route", r -> r.host("*.hystrixfallback.org")
