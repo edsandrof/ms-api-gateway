@@ -18,8 +18,10 @@ public class ApiGatewayApplication {
 		return builder.routes()
 				.route("movies", r -> r.path("/api/movies")
 						.uri("http://MOVIES-SERVICE"))
-				.route("tickets", r -> r.path("/api/tickets")
-						.uri("http://TICKETS-SERVICE"))
+				.route("ticket", r -> r.path("/api/ticket")
+						.uri("http://TICKETS-SERVICE/ticket"))
+				.route("showtime", r -> r.path("/api/showtime")
+						.uri("http://TICKETS-SERVICE/showtime"))
 				/*
 				.route("config", r -> r.path("*.rewrite.org")
 						.filters(f -> f.rewritePath("/foo/(?<segment>.*)", "/${segment}"))
